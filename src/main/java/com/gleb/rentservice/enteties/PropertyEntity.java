@@ -14,14 +14,16 @@ public class PropertyEntity extends BaseEntity {
     private Set<RentalEntity> rentalSet;
     private Set<ReviewEntity> reviewSet;
     private OwnerEntity owner;
+    private PropertyStatus status;
 
-    public PropertyEntity(String address, String description, Double pricePerNight, Set<RentalEntity> rentalSet, Set<ReviewEntity> reviewSet, OwnerEntity owner) {
+    public PropertyEntity(String address, String description, Double pricePerNight, Set<RentalEntity> rentalSet, Set<ReviewEntity> reviewSet, OwnerEntity owner, PropertyStatus status) {
         this.address = address;
         this.description = description;
         this.pricePerNight = pricePerNight;
         this.rentalSet = rentalSet;
         this.reviewSet = reviewSet;
         this.owner = owner;
+        this.status = status;
     }
 
     protected PropertyEntity() {}
@@ -80,5 +82,14 @@ public class PropertyEntity extends BaseEntity {
     public void setOwner(OwnerEntity owner) {
         this.owner = owner;
     }
-}
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    public PropertyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PropertyStatus status) {
+        this.status = status;
+    }
+}

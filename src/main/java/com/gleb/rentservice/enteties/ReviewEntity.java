@@ -10,14 +10,14 @@ public class ReviewEntity extends BaseEntity {
     private Integer rating;
     private PropertyEntity property;
     private TenantEntity tenant;
-    private OwnerEntity owner;
+    private RentalEntity rental; // аренда, к которой относится отзыв
 
-    public ReviewEntity(String content, Integer rating, PropertyEntity property, TenantEntity tenant, OwnerEntity owner) {
+    public ReviewEntity(String content, Integer rating, PropertyEntity property, TenantEntity tenant, RentalEntity rental) {
         this.content = content;
         this.rating = rating;
         this.property = property;
         this.tenant = tenant;
-        this.owner = owner;
+        this.rental = rental;
     }
 
     protected ReviewEntity() {}
@@ -61,13 +61,12 @@ public class ReviewEntity extends BaseEntity {
     }
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    public OwnerEntity getOwner() {
-        return owner;
+    @JoinColumn(name = "rental_id")
+    public RentalEntity getRental() {
+        return rental;
     }
 
-    public void setOwner(OwnerEntity owner) {
-        this.owner = owner;
+    public void setRental(RentalEntity rental) {
+        this.rental = rental;
     }
 }
-

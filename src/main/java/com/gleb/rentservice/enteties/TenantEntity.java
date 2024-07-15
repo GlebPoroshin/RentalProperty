@@ -14,14 +14,16 @@ public class TenantEntity extends BaseEntity {
     private String contactNumber;
     private Set<RentalEntity> rentalSet;
     private Set<ReviewEntity> reviewSet;
+    private Double averageRating;
 
-    public TenantEntity(String name, String surname, String email, String contactNumber, Set<RentalEntity> rentalSet, Set<ReviewEntity> reviewSet) {
+    public TenantEntity(String name, String surname, String email, String contactNumber, Set<RentalEntity> rentalSet, Set<ReviewEntity> reviewSet, Double averageRating) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.contactNumber = contactNumber;
         this.rentalSet = rentalSet;
         this.reviewSet = reviewSet;
+        this.averageRating = averageRating;
     }
 
     protected TenantEntity() {}
@@ -78,5 +80,14 @@ public class TenantEntity extends BaseEntity {
 
     public void setReviewSet(Set<ReviewEntity> reviewSet) {
         this.reviewSet = reviewSet;
+    }
+
+    @Column(name = "average_rating")
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
     }
 }
