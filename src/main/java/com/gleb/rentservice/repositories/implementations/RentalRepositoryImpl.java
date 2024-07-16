@@ -39,4 +39,15 @@ public class RentalRepositoryImpl extends BaseRepository<RentalEntity, Long> imp
         query.setParameter("ownerId", ownerId);
         return query.getResultList();
     }
+
+    @Override
+    public RentalEntity findById(Long id) {
+        return entityManager.find(RentalEntity.class, id);
+    }
+
+    @Override
+    public List<RentalEntity> findAll() {
+        return List.of();
+    }
+
 }

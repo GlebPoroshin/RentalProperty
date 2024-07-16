@@ -41,4 +41,15 @@ public class TenantRepositoryImpl extends BaseRepository<TenantEntity, Long> imp
             throw new EntityNotFoundException("Tenant not found");
         }
     }
+
+    @Override
+    public TenantEntity findById(Long id) {
+        return entityManager.find(TenantEntity.class, id);
+    }
+
+    @Override
+    public List<TenantEntity> findAll() {
+        return List.of();
+    }
+
 }

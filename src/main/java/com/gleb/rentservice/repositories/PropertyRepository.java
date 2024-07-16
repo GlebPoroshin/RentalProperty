@@ -9,7 +9,7 @@ public interface PropertyRepository {
 
     List<PropertyEntity> findAllByOwnerId(Long ownerId);
 
-    PropertyEntity save(PropertyEntity entity);
+    void save(PropertyEntity entity);
 
     PropertyEntity findById(Long id);
 

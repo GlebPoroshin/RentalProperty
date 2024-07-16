@@ -10,13 +10,12 @@ import java.util.List;
 
 @Component
 public interface OwnerRepository {
-    OwnerEntity findOwnerById(Long ownerId);
 
     List<PropertyEntity> findPropertiesByOwnerId(Long ownerId);
 
     List<RentalEntity> findRentalsByOwnerId(Long ownerId);
 
-    OwnerEntity save(OwnerEntity entity);
+    void save(OwnerEntity entity);
 
     OwnerEntity findById(Long id);
 }

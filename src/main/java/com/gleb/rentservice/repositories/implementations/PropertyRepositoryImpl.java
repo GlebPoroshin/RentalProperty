@@ -32,5 +32,16 @@ public class PropertyRepositoryImpl extends BaseRepository<PropertyEntity, Long>
         query.setParameter("ownerId", ownerId);
         return query.getResultList();
     }
+
+    @Override
+    public PropertyEntity findById(Long id) {
+        return entityManager.find(PropertyEntity.class, id);
+    }
+
+    @Override
+    public List<PropertyEntity> findAll() {
+        return List.of();
+    }
+
 }
 

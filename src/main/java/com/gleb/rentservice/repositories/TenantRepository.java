@@ -12,7 +12,7 @@ public interface TenantRepository {
 
     void updateTenantAverageRating(Long tenantId, double averageRating);
 
-    TenantEntity save(TenantEntity entity);
+    void save(TenantEntity entity);
 
     TenantEntity findById(Long id);
 

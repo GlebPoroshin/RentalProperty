@@ -11,7 +11,7 @@ public interface RentalRepository {
 
     List<RentalEntity> findCompletedRentalsByOwnerId(Long ownerId);
 
-    RentalEntity save(RentalEntity entity);
+    void save(RentalEntity entity);
 
     RentalEntity findById(Long id);
 

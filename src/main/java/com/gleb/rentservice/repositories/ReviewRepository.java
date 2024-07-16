@@ -7,7 +7,7 @@ import java.util.List;
 public interface ReviewRepository {
     List<ReviewEntity> findByTenantId(Long tenantId);
 
-    ReviewEntity save(ReviewEntity entity);
+    void save(ReviewEntity entity);
 
     ReviewEntity findById(Long id);
 
