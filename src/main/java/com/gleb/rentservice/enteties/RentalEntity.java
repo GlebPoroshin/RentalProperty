@@ -12,7 +12,7 @@ public class RentalEntity extends BaseEntity {
     private LocalDateTime endDate;
     private PropertyEntity property;
     private TenantEntity tenant;
-    private String cancellationReason; // причина отмены бронирования
+    private String cancellationReason;
 
     public RentalEntity(LocalDateTime startDate, LocalDateTime endDate, PropertyEntity property, TenantEntity tenant, String cancellationReason) {
         this.startDate = startDate;
