@@ -13,9 +13,6 @@ import java.util.List;
 @Repository
 public class RentalRepositoryImpl extends BaseRepository<RentalEntity, Long> implements RentalRepository {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     public List<RentalEntity> findUpcomingRentalsByOwnerId(Long ownerId) {
         String jpql = "SELECT r FROM RentalEntity r WHERE r.property.owner.id = :ownerId AND r.endDate > CURRENT_TIMESTAMP";

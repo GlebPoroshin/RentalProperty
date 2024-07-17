@@ -15,9 +15,6 @@ import java.util.List;
 @Component
 public class PropertyRepositoryImpl extends BaseRepository<PropertyEntity, Long> implements PropertyRepository {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     public List<PropertyEntity> findAllAvailableProperties() {
         String jpql = "SELECT p FROM PropertyEntity p WHERE p.status = 'AVAILABLE'";

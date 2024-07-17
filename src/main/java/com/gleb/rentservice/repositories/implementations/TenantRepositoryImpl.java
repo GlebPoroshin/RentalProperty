@@ -4,9 +4,7 @@ import com.gleb.rentservice.enteties.ReviewEntity;
 import com.gleb.rentservice.enteties.TenantEntity;
 import com.gleb.rentservice.repositories.BaseRepository;
 import com.gleb.rentservice.repositories.TenantRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
@@ -14,9 +12,6 @@ import java.util.List;
 
 @Repository
 public class TenantRepositoryImpl extends BaseRepository<TenantEntity, Long> implements TenantRepository {
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Override
     public TenantEntity findTenantById(Long tenantId) {

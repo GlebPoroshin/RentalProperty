@@ -13,9 +13,6 @@ import java.util.List;
 @Repository
 public class ReviewRepositoryImpl extends BaseRepository<ReviewEntity, Long> implements ReviewRepository {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     public List<ReviewEntity> findByTenantId(Long tenantId) {
         String jpql = "SELECT r FROM ReviewEntity r WHERE r.tenant.id = :tenantId";
