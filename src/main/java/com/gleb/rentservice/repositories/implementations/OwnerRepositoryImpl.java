@@ -31,6 +31,11 @@ public class OwnerRepositoryImpl extends BaseRepository<OwnerEntity, Long> imple
 
     @Override
     public OwnerEntity findById(Long id) {
-        return entityManager.find(OwnerEntity.class, id);
+       return super.findById(OwnerEntity.class, id);
+    }
+
+    @Override
+    public List<OwnerEntity> findAll() {
+        return super.findAll(OwnerEntity.class);
     }
 }

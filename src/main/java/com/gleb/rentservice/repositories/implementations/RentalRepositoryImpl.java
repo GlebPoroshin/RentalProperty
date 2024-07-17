@@ -39,12 +39,11 @@ public class RentalRepositoryImpl extends BaseRepository<RentalEntity, Long> imp
 
     @Override
     public RentalEntity findById(Long id) {
-        return entityManager.find(RentalEntity.class, id);
+        return super.findById(RentalEntity.class, id);
     }
 
     @Override
     public List<RentalEntity> findAll() {
-        return List.of();
+        return super.findAll(RentalEntity.class);
     }
-
 }

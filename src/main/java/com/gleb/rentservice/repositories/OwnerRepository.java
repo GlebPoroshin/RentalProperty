@@ -18,4 +18,6 @@ public interface OwnerRepository {
     void save(OwnerEntity entity);
 
     OwnerEntity findById(Long id);
+
+    List<OwnerEntity> findAll();
 }

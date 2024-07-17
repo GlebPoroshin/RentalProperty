@@ -39,12 +39,11 @@ public class TenantRepositoryImpl extends BaseRepository<TenantEntity, Long> imp
 
     @Override
     public TenantEntity findById(Long id) {
-        return entityManager.find(TenantEntity.class, id);
+        return super.findById(TenantEntity.class, id);
     }
 
     @Override
     public List<TenantEntity> findAll() {
-        return List.of();
+        return super.findAll(TenantEntity.class);
     }
-
 }

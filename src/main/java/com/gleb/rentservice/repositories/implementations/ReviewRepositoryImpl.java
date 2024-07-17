@@ -22,20 +22,20 @@ public class ReviewRepositoryImpl extends BaseRepository<ReviewEntity, Long> imp
     }
 
     @Override
-    public ReviewEntity findById(Long id) {
-        return entityManager.find(ReviewEntity.class, id);
-    }
-
-    @Override
-    public List<ReviewEntity> findAll() {
-        return List.of();
-    }
-
-    @Override
     public List<ReviewEntity> findByPropertyId(Long propertyId) {
         String jpql = "SELECT r FROM ReviewEntity r WHERE r.property.id = :propertyId";
         TypedQuery<ReviewEntity> query = entityManager.createQuery(jpql, ReviewEntity.class);
         query.setParameter("propertyId", propertyId);
         return query.getResultList();
+    }
+
+    @Override
+    public ReviewEntity findById(Long id) {
+        return super.findById(ReviewEntity.class, id);
+    }
+
+    @Override
+    public List<ReviewEntity> findAll() {
+        return super.findAll(ReviewEntity.class);
     }
 }

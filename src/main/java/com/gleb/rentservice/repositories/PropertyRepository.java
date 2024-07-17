@@ -1,6 +1,7 @@
 package com.gleb.rentservice.repositories;
 
 import com.gleb.rentservice.enteties.PropertyEntity;
+import com.gleb.rentservice.enteties.ReviewEntity;
 
 import java.util.List;
 

@@ -3,8 +3,6 @@ package com.gleb.rentservice.repositories.implementations;
 import com.gleb.rentservice.enteties.PropertyEntity;
 import com.gleb.rentservice.repositories.BaseRepository;
 import com.gleb.rentservice.repositories.PropertyRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -32,13 +30,11 @@ public class PropertyRepositoryImpl extends BaseRepository<PropertyEntity, Long>
 
     @Override
     public PropertyEntity findById(Long id) {
-        return entityManager.find(PropertyEntity.class, id);
+        return super.entityManager.find(PropertyEntity.class, id);
     }
 
     @Override
     public List<PropertyEntity> findAll() {
-        return List.of();
+        return super.findAll(PropertyEntity.class);
     }
-
 }
-
