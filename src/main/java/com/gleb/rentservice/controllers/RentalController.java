@@ -18,11 +18,12 @@ public class RentalController {
     }
 
     @PostMapping("/create")
-    public void createRental(@RequestParam Long tenantId, @RequestParam Long propertyId,
+    public ResponseEntity<String> createRental(@RequestParam Long tenantId, @RequestParam Long propertyId,
                                                @RequestParam String startDate, @RequestParam String endDate) {
         LocalDateTime start = LocalDateTime.parse(startDate);
         LocalDateTime end = LocalDateTime.parse(endDate);
         rentalService.createRental(tenantId, propertyId, start, end);
+        return ResponseEntity.ok("Rental created successfully");
     }
 
     @PostMapping("/cancel")

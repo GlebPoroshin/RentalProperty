@@ -32,8 +32,8 @@ public class PropertyController {
     }
 
     @GetMapping("/{propertyId}/dynamicPrice")
-    public ResponseEntity<PropertyDTO> getPropertyWithDynamicPrice(@PathVariable Long propertyId, @RequestParam Long tenantId) {
+    public ResponseEntity<String> getPropertyWithDynamicPrice(@PathVariable Long propertyId, @RequestParam Long tenantId) {
         PropertyDTO property = propertyService.getPropertyWithDynamicPrice(propertyId, tenantId);
-        return ResponseEntity.ok(property);
+        return ResponseEntity.ok("Price per night for property on " + property.getAddress() + " is " + property.getPricePerNight() + "$");
     }
 }
