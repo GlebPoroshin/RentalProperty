@@ -72,7 +72,7 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 9000000)
     @Transactional
     public void checkAndUpdatePropertyStatus() {
         List<RentalEntity> rentals = rentalRepository.findAll();
