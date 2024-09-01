@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,29 +30,39 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public List<PropertyDTO> getAllAvailableProperties() {
         return propertyRepository.findAllAvailableProperties().stream()
+                .filter(Objects::nonNull)
                 .map(property -> new PropertyDTO(
                         property.getId(),
                         property.getAddress(),
                         property.getDescription(),
                         property.getPricePerNight(),
                         property.getStatus(),
-                        property.getOwner().getId()))
+                        property.getOwner() != null ? property.getOwner().getId() : null))
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void updatePropertyStatus(Long propertyId, PropertyStatus status) {
-        PropertyEntity property = propertyRepository.findById(propertyId);
-        if (property == null) throw new EntityNotFoundException("Property not found");
+        if (propertyId == null || status == null) {
+            throw new IllegalArgumentException("Property ID and status cannot be null");
+        }
+
+        PropertyEntity property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
         property.setStatus(status);
         propertyRepository.save(property);
     }
 
     @Override
     public PropertyDTO getPropertyWithDynamicPrice(Long propertyId, Long tenantId) {
-        PropertyEntity property = propertyRepository.findById(propertyId);
-        if (property == null) throw new EntityNotFoundException("Property not found");
+        if (propertyId == null || tenantId == null) {
+            throw new IllegalArgumentException("Property ID and Tenant ID cannot be null");
+        }
+
+        PropertyEntity property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
+
         double dynamicPrice = tenantService.calculateDynamicPrice(propertyId, tenantId);
 
         return new PropertyDTO(
@@ -60,6 +71,6 @@ public class PropertyServiceImpl implements PropertyService {
                 property.getDescription(),
                 dynamicPrice,
                 property.getStatus(),
-                property.getOwner().getId());
+                property.getOwner() != null ? property.getOwner().getId() : null);
     }
 }

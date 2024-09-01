@@ -82,7 +82,7 @@ public class TenantEntity extends BaseEntity {
         this.reviewSet = reviewSet;
     }
 
-    @Column(name = "average_rating")
+    @Column(name = "'average_rating'")
     public Double getAverageRating() {
         return averageRating;
     }

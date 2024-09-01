@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<ReviewDTO> getReviewsByPropertyId(Long propertyId) {
         return reviewRepository.findByPropertyId(propertyId).stream()
+                .filter(Objects::nonNull)
                 .map(review -> new ReviewDTO(
                         review.getId(),
                         review.getContent(),
@@ -60,10 +62,16 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public void leaveReviewForTenant(Long rentalId, String content, Integer rating) {
-        RentalEntity rental = rentalRepository.findById(rentalId);
-        if (rental == null) throw new EntityNotFoundException("Rental not found");
+        if (rentalId == null || content == null || content.isEmpty() || rating == null) {
+            throw new IllegalArgumentException("Invalid input data");
+        }
+
+        RentalEntity rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new EntityNotFoundException("Rental not found"));
+
         ReviewEntity review = new ReviewEntity(content, rating, rental.getProperty(), rental.getTenant(), rental);
         reviewRepository.save(review);
+
         tenantService.updateTenantRating(rating.longValue());
     }
 }

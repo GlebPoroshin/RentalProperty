@@ -1,21 +1,21 @@
 package com.gleb.rentservice.repositories;
 
-import com.gleb.rentservice.enteties.PropertyEntity;
 import com.gleb.rentservice.enteties.ReviewEntity;
 import com.gleb.rentservice.enteties.TenantEntity;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface TenantRepository {
-    TenantEntity findTenantById(Long tenantId);
+@Repository
+public interface TenantRepository extends BaseRepository<TenantEntity, Long> {
 
+    @Query("SELECT r FROM ReviewEntity r WHERE r.tenant.id = :tenantId")
     List<ReviewEntity> findReviewsByTenantId(Long tenantId);
 
-    void updateTenantAverageRating(Long tenantId, double averageRating);
+    @Modifying
+    @Query("UPDATE TenantEntity t SET t.averageRating = :averageRating WHERE t.id = :tenantId")
+    int updateTenantAverageRating(Long tenantId, double averageRating);
 
-    void save(TenantEntity entity);
-
-    TenantEntity findById(Long id);
-
-    List<TenantEntity> findAll();
 }

@@ -30,10 +30,13 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public double calculateAverageRating(Long tenantId) {
         List<ReviewEntity> reviews = reviewRepository.findByTenantId(tenantId);
-        double averageRating = reviews.stream().mapToDouble(ReviewEntity::getRating).average().orElse(0.0);
+        double averageRating = reviews.stream()
+                .mapToDouble(ReviewEntity::getRating)
+                .average()
+                .orElse(0.0);
 
-        TenantEntity tenant = tenantRepository.findById(tenantId);
-        if (tenant == null) throw new EntityNotFoundException("Tenant not found");
+        TenantEntity tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new EntityNotFoundException("Tenant not found"));
         tenant.setAverageRating(averageRating);
         tenantRepository.save(tenant);
 
@@ -53,10 +56,10 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public double calculateDynamicPrice(Long propertyId, Long tenantId) {
-        PropertyEntity property = propertyRepository.findById(propertyId);
-        if (property == null) throw new EntityNotFoundException("Property not found");
-        TenantEntity tenant = tenantRepository.findById(tenantId);
-        if (tenant == null) throw new EntityNotFoundException("Tenant not found");
+        PropertyEntity property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
+        TenantEntity tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new EntityNotFoundException("Tenant not found"));
         double basePrice = property.getPricePerNight();
         double discountCoefficient = getDiscountCoefficient(tenant.getAverageRating());
         return basePrice * discountCoefficient;
@@ -64,7 +67,9 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public void updateTenantRating(Long tenantId) {
-        TenantEntity tenant = tenantRepository.findById(tenantId);
+        TenantEntity tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new EntityNotFoundException("Tenant not found"));
         tenant.setAverageRating(calculateAverageRating(tenantId));
+        tenantRepository.save(tenant);
     }
 }

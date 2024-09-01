@@ -34,11 +34,15 @@ public class RentalServiceImpl implements RentalService {
     @Override
     @Transactional
     public void createRental(Long tenantId, Long propertyId, LocalDateTime startDate, LocalDateTime endDate) {
-        TenantEntity tenant = tenantRepository.findById(tenantId);
-        if (tenant == null) throw new EntityNotFoundException("Tenant not found");
+        if (tenantId == null || propertyId == null || startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Invalid input data");
+        }
 
-        PropertyEntity property = propertyRepository.findById(propertyId);
-        if (property == null) throw new EntityNotFoundException("Property not found");
+        TenantEntity tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new EntityNotFoundException("Tenant not found"));
+
+        PropertyEntity property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
 
         RentalEntity rental = new RentalEntity(startDate, endDate, property, tenant, null);
         rentalRepository.save(rental);
@@ -50,8 +54,13 @@ public class RentalServiceImpl implements RentalService {
     @Override
     @Transactional
     public void cancelRental(Long rentalId, String reason) {
-        RentalEntity rental = rentalRepository.findById(rentalId);
-        if (rental == null) throw new EntityNotFoundException("Rental not found");
+        if (rentalId == null || reason == null || reason.isEmpty()) {
+            throw new IllegalArgumentException("Invalid rentalId or reason");
+        }
+
+        RentalEntity rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new EntityNotFoundException("Rental not found"));
+
         rental.setCancellationReason(reason);
         rentalRepository.save(rental);
 
@@ -63,8 +72,12 @@ public class RentalServiceImpl implements RentalService {
     @Override
     @Transactional
     public void confirmPayment(Long rentalId) {
-        RentalEntity rental = rentalRepository.findById(rentalId);
-        if (rental == null) throw new EntityNotFoundException("Rental not found");
+        if (rentalId == null) {
+            throw new IllegalArgumentException("Invalid rentalId");
+        }
+
+        RentalEntity rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new EntityNotFoundException("Rental not found"));
 
         PropertyEntity property = rental.getProperty();
         property.setStatus(PropertyStatus.RENTED);
@@ -72,17 +85,18 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 9000000)
     @Transactional
     public void checkAndUpdatePropertyStatus() {
-        List<RentalEntity> rentals = rentalRepository.findAll();
         LocalDateTime now = LocalDateTime.now();
+        List<RentalEntity> rentals = rentalRepository.findAll().stream()
+                .filter(rental -> rental.getEndDate().isBefore(now) && rental.getProperty().getStatus() == PropertyStatus.RENTED)
+                .toList();
+
         for (RentalEntity rental : rentals) {
-            if (rental.getEndDate().isBefore(now) && rental.getProperty().getStatus() == PropertyStatus.RENTED) {
-                PropertyEntity property = rental.getProperty();
-                property.setStatus(PropertyStatus.AVAILABLE);
-                propertyRepository.save(property);
-            }
+            PropertyEntity property = rental.getProperty();
+            property.setStatus(PropertyStatus.AVAILABLE);
+            propertyRepository.save(property);
         }
     }
 }
