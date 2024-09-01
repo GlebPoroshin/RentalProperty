@@ -5,7 +5,6 @@ import com.gleb.rentservice.enteties.OwnerEntity;
 import com.gleb.rentservice.enteties.PropertyEntity;
 import com.gleb.rentservice.enteties.RentalEntity;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

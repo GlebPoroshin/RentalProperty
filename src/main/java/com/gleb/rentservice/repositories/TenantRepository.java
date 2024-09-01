@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface TenantRepository extends BaseRepository<TenantEntity, Long> {
 
-    TenantEntity findTenantById(Long tenantId);
-
     @Query("SELECT r FROM ReviewEntity r WHERE r.tenant.id = :tenantId")
     List<ReviewEntity> findReviewsByTenantId(Long tenantId);
 

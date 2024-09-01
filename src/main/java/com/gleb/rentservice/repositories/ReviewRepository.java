@@ -1,6 +1,5 @@
 package com.gleb.rentservice.repositories;
 
-import com.gleb.rentservice.enteties.OwnerEntity;
 import com.gleb.rentservice.enteties.ReviewEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
