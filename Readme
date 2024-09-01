@@ -2,7 +2,7 @@
 
 Сущности: Недвижимость, Арендатор, Владелец, Аренда, Отзыв
 
-![alt text](https://github.com/GlebPoroshin/RentalProperty/main/ERD.png?raw=true)
+![ERD](https://github.com/GlebPoroshin/RentalProperty/main/ERD.png)
 
 Сценарии использования:
 1. Бронирование недвижимости: Арендатор заходит на сайт, выбирает интересующую его недвижимость и бронирует ее на определенные даты
